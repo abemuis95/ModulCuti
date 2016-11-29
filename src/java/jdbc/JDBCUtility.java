@@ -121,7 +121,7 @@ public class JDBCUtility
                     + "catatan, "
                     + "alamatCuti,"
                     + "bilanganCuti) "
-                    + "VALUES(?, ?, ?, ?, ?, ?)";
+                    + "VALUES(?, ?, ?, ?, ?, ?, ?)";
             psInsertMohonCutiRehat = con.prepareStatement(sqlInsertMohonCutiRehat);
             
             //kira bilangan cuti menggunakan SQL DATEDIFF WHERE tarikh NOT IN (SELECT tarikh FROM cutiumum ) 

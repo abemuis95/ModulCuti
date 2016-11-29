@@ -227,7 +227,7 @@
                                 </div>
                                 <!-- /.box-header -->
                                 <!-- Borang mohon cuti -->
-                                <form role="form" method="POST">
+                                <form role="form" method="POST" action="InsertCutiRehat">
                                     <div class="box-body">
                                         <div class="row">
                                             <div class="col-lg-6">
@@ -327,7 +327,7 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Tidak</button>
-                                                        <button type="submit" class="btn btn-success" data-dismiss="modal">Ya</button>
+                                                        <button type="submit" class="btn btn-success" >Hantar</button>
                                                     </div>
                                                 </div>
                                             </div>
