@@ -7,6 +7,7 @@
         <title>HR | Modul Cuti</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel='shortcut icon' href='favicon.ico' type='image/x-icon'/ >
         <!-- Bootstrap 3.3.6 -->
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
         <!-- Font Awesome -->
@@ -44,86 +45,8 @@
 
             <%@ include file="../header.jsp" %>
 
-            <!-- Left side column. contains the logo and sidebar -->
-            <aside class="main-sidebar">
-                <!-- sidebar: style can be found in sidebar.less -->
-                <section class="sidebar">
-                    <!-- Sidebar user panel -->
-                    <div class="user-panel">
-                        <div class="pull-left image">
-                            <img src="<c:out value='${sessionScope.staffSession.photo}'/>" class="img-circle" alt="User Image">
-                        </div>
-                        <div class="pull-left info">
-                            <p><c:out value="${(sessionScope.staffSession.name)}"/></p>
-                            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-                        </div>
-                    </div>
-                    <!-- search form -->
-                    <form action="#" method="get" class="sidebar-form">
-                        <div class="input-group">
-                            <input type="text" name="q" class="form-control" placeholder="Search...">
-                            <span class="input-group-btn">
-                                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                                </button>
-                            </span>
-                        </div>
-                    </form>
-                    <!-- /.search form -->
-                    <!-- sidebar menu: : style can be found in sidebar.less -->
-                    <ul class="sidebar-menu">
-                        <li class="header">MAIN NAVIGATION</li>
-                        <li class="treeview">
-                            <a href="index.html">
-                                <i class="fa fa-dashboard"></i> <span>eLog Dashboard</span>
-                            </a>
-                        </li>
-                        <li class="treeview active">
-                            <a href="#">
-                                <i class="fa fa-edit"></i> <span>Cuti</span>
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li class="treeview active">
-                                    <a href="#"><i class="fa fa-angle-double-right"></i> Cuti Rehat
-                                    </a>
-                                    <ul class="treeview-menu">
-                                        <li class="treeview active"><a href="MohonCuti"><i class="fa fa-circle-o"></i> Mohon Cuti Rehat</a></li>
-                                        <li><a href="semakcuti.html"><i class="fa fa-circle-o"></i> Semak Permohonan</a></li>
-                                        <li><a href="batalcuti.html"><i class="fa fa-circle-o"></i> Batal Permohonan</a></li>
-                                        <li><a href="sokonglulus.html"><i class="fa fa-circle-o"></i> Sokong/Lulus Permohonan</a></li>
-                                    </ul>
-                                </li>
-
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Cuti Sakit</a></li>
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Cuti Lahir</a></li>
-                            </ul>
-                        </li>
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-edit"></i> <span>Admin</span>
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li class="treeview active">
-                                    <a href="#">
-                                        <i class="fa fa-angle-double-right"></i> Cuti
-                                    </a>
-                                    <ul class="treeview-menu">
-                                        <li><a href="daftarCuti.html"><i class="fa fa-circle-o"></i> Daftar Cuti</a></li>
-                                        <li class="treeview active"><a href="hapusCuti.html"><i class="fa fa-circle-o"></i> Hapus Cuti</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="treeview">
-                            <a href="index.html">
-                                <i class="fa fa-sign-out"></i> <span>Logout</span>
-                            </a>
-                        </li>
-                    </ul>
-                </section>
-                <!-- /.sidebar -->
-            </aside>
+            <% //Left side column. contains the logo and sidebar %>
+            <%@ include file="main-sidebar.jsp" %>
 
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
@@ -208,7 +131,7 @@
                             <div class="box box-primary">
                                 <div class="box-header">
                                     <h3 class="box-title">Borang Mohon Cuti</h3>
-                                    <div class="pull-right"><strong>Tarikh Mohon</strong><strong id="tarikhSekarang"></strong></div>
+                                    <div class="pull-right"><strong>Tarikh Mohon: </strong><strong id="tarikhSekarang"></strong></div>
                                 </div>
 
                                 <!-- /.box-header -->
@@ -222,14 +145,19 @@
                                                 <!-- text input -->
                                                 <label class="col-lg-3 text-right">Pegawai Menyokong</label>
                                                 <div class="form-group col-lg-9">
-
-                                                    <input type="text" class="form-control input-sm" value="<c:out value="${fn:toUpperCase(sessionScope.penyokongSession.name)}"/>" disabled/>
+                                                    <input type="text" 
+                                                           class="form-control input-sm" 
+                                                           value="<c:out value="${fn:toUpperCase(sessionScope.penyokongSession.realName)}"/>" 
+                                                           disabled />
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <label class="col-lg-3 text-right">Pegawai Melulus</label>
                                                 <div class="form-group col-lg-9">
-                                                    <input type="text" class="form-control input-sm" value="<c:out value="${fn:toUpperCase(sessionScope.pelulusSession.name)}"/>" disabled/>
+                                                    <input type="text" 
+                                                           class="form-control input-sm" 
+                                                           value="<c:out value="${fn:toUpperCase(sessionScope.pelulusSession.realName)}"/>" 
+                                                           disabled/>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
@@ -239,7 +167,12 @@
                                                         <div class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </div>
-                                                        <input type="text" class="form-control input-sm pull-right" id="rangeTarikh" name="rangeTarikh" required/>
+                                                        <input type="text" 
+                                                               class="form-control input-sm pull-right" 
+                                                               id="rangeTarikh" 
+                                                               style="cursor:pointer; background-color: #FFFFFF"
+                                                               name="rangeTarikh" readonly="readonly"
+                                                               placeholder="Tarik Mula hingga Tamat Cuti Rehat, format=dd/mm/yyyy - dd/mm/yyyy" required/>
                                                         <input type="hidden" name="tarikhMula" id="tarikhMula" value="" readonly>
                                                         <input type="hidden" name="tarikhAkhir" id="tarikhAkhir" value="" readonly>
                                                     </div><!-- /.input group -->
@@ -483,7 +416,9 @@
         <script src="plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
         <script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>
         <!-- date-range-picker -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment-with-locales.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/locale/ms-my.js"></script>
         <script src="plugins/daterangepicker/daterangepicker.js"></script>
         <!-- bootstrap datepicker -->
         <script src="plugins/datepicker/bootstrap-datepicker.js"></script>
@@ -507,7 +442,7 @@
                 var start;
                 var end;
                 //show current date
-                var today = moment().format('DD/MM/YYYY');
+                var today = moment().locale('ms-my').format('LL');
                 $('#tarikhSekarang').text(today);
 
                 //Initialize Select2 Elements

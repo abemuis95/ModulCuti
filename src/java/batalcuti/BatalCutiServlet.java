@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mohoncuti;
+package batalcuti;
 
+import bean.MohonCuti;
 import bean.Staff;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,6 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,8 +27,8 @@ import jdbc.JDBCUtility;
  *
  * @author USER
  */
-@WebServlet(name = "ViewMohonCutiServlet", urlPatterns = {"/MohonCuti"})
-public class ViewMohonCutiServlet extends HttpServlet {
+@WebServlet(name = "BatalCutiServlet", urlPatterns = {"/BatalCuti"})
+public class BatalCutiServlet extends HttpServlet {
     
     private JDBCUtility jdbcUtility;
     private Connection con;
@@ -64,14 +66,56 @@ public class ViewMohonCutiServlet extends HttpServlet {
         
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession(false);
-        if (session != null) {
+        MohonCuti mcuti = null;
+        if(session != null){
             if (session.getAttribute("staffSession") != null) {
-                sendPage(request, response, "/pages/mohon/mohoncuti.jsp");
-            } else {
+                // get Staff object from session
+                Staff profile = (Staff) session.getAttribute("staffSession");
+                String staffno = profile.getStaffNo();
+                int id = Integer.parseInt(request.getParameter("id"));
+                String tarikhMulaTamat = "";
+
+                try {
+                    /* TODO output your page here. You may use following sample code. */
+                    PreparedStatement preparedStatement = jdbcUtility.getPsSelectMohonCutiRehatViaID();
+                    preparedStatement.setInt(1, id);
+                    ResultSet rs = preparedStatement.executeQuery();
+                    while (rs.next()) {
+                        String tarikhMohon = rs.getString("tarikhMohon");
+                        String tarikhMula = rs.getString("tarikhMula");
+                        String tarikhTamat = rs.getString("tarikhTamat");
+                        int bilanganCuti = rs.getInt("bilanganCuti");
+                        String alamatCuti = rs.getString("alamatCuti");
+                        String catatan = rs.getString("catatan");
+                        String status = rs.getString("status");
+                        
+                        tarikhMulaTamat = tarikhMula + " - " + tarikhTamat;
+                        
+                        mcuti = new MohonCuti();
+                        mcuti.setId(id);
+                        mcuti.setTarikhMohon(tarikhMohon);
+                        mcuti.setTarikhMula(tarikhMula);
+                        mcuti.setTarikhTamat(tarikhTamat);
+                        mcuti.setBilanganCuti(bilanganCuti);
+                        mcuti.setAlamatCuti(alamatCuti);
+                        mcuti.setCatatan(catatan);
+                        mcuti.setStatus(status);
+                    }
+
+                } catch (SQLException ex) {
+                }
+                
+                request.setAttribute("tarikhMulaTamat", tarikhMulaTamat);
+                request.setAttribute("batalCuti", mcuti);
+
+                sendPage(request, response, "/pages/batal/batalcuti.jsp");
+            }
+            else{
                 response.sendRedirect(request.getContextPath() + "/index.jsp");
             }
-
-        } else {
+            
+        }
+        else{
             response.sendRedirect(request.getContextPath() + "/index.jsp");
         }
             

@@ -24,6 +24,8 @@ public class JDBCUtility
    PreparedStatement psSelectSokongLulusViaID = null;
    PreparedStatement psInsertMohonCutiRehat = null;
    PreparedStatement psKiraBilanganCuti = null;
+   PreparedStatement psSelectMohonCutiRehatViaIDSokongLulus = null;
+   PreparedStatement psSelectMohonCutiRehatViaID = null;
 
    //use this constructor if using ConnectionPool
    public JDBCUtility()
@@ -113,6 +115,14 @@ public class JDBCUtility
             String sqlSelectSokongLulusViaID = "SELECT * FROM sokonglulus WHERE id_sokonglulus = ?"; 
             psSelectSokongLulusViaID = con.prepareStatement(sqlSelectSokongLulusViaID);
             
+            //select staff via staff no 
+            String sqlSelectMohonCutiRehatViaIDSokongLulus = "SELECT * FROM mohoncutirehat WHERE id_sokonglulus = ?"; 
+            setPsSelectMohonCutiRehatViaIDSokongLulus(con.prepareStatement(sqlSelectMohonCutiRehatViaIDSokongLulus));
+            
+            //select staff via staff no 
+            String sqlSelectMohonCutiRehatViaID = "SELECT * FROM mohoncutirehat WHERE id = ?"; 
+            psSelectMohonCutiRehatViaID = con.prepareStatement(sqlSelectMohonCutiRehatViaID);
+            
             String sqlInsertMohonCutiRehat = "INSERT INTO mohoncutirehat("
                     + "tarikhMula, "
                     + "tarikhTamat, "
@@ -126,7 +136,9 @@ public class JDBCUtility
             
             //kira bilangan cuti menggunakan SQL DATEDIFF WHERE tarikh NOT IN (SELECT tarikh FROM cutiumum ) 
             String sqlKiraBilanganCuti = " SELECT (DATEDIFF(?, ?)+1) "
-                    + " - (SELECT COUNT(*) FROM cutiumum WHERE (cutiumum.tarikh BETWEEN ? AND ?) AND kampus = 3  ) AS totalCuti ";
+                    + " - (SELECT COUNT(DISTINCT tarikh) FROM cutiumum "
+                    + " WHERE (cutiumum.tarikh BETWEEN ? AND ?) AND (kampus = 'A' OR kampus = ? )  ) "
+                    + " AS totalCuti ";
             psKiraBilanganCuti = con.prepareStatement(sqlKiraBilanganCuti); 
              
             
@@ -194,6 +206,27 @@ public class JDBCUtility
      */
     public PreparedStatement getPsKiraBilanganCuti() {
         return psKiraBilanganCuti;
+    }
+
+    /**
+     * @return the psSelectMohonCutiRehatViaID
+     */
+    public PreparedStatement getPsSelectMohonCutiRehatViaID() {
+        return psSelectMohonCutiRehatViaID;
+    }
+
+    /**
+     * @return the psSelectMohonCutiRehatViaIDSokongLulus
+     */
+    public PreparedStatement getPsSelectMohonCutiRehatViaIDSokongLulus() {
+        return psSelectMohonCutiRehatViaIDSokongLulus;
+    }
+
+    /**
+     * @param psSelectMohonCutiRehatViaIDSokongLulus the psSelectMohonCutiRehatViaIDSokongLulus to set
+     */
+    public void setPsSelectMohonCutiRehatViaIDSokongLulus(PreparedStatement psSelectMohonCutiRehatViaIDSokongLulus) {
+        this.psSelectMohonCutiRehatViaIDSokongLulus = psSelectMohonCutiRehatViaIDSokongLulus;
     }
 
     

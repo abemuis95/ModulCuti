@@ -73,6 +73,7 @@ public class SemakMohonServlet extends HttpServlet {
                 // get Staff object from session
                 Staff profile = (Staff) session.getAttribute("staffSession");
                 int id_sokonglulus = profile.getId_sokonglulus();
+                String kampus = profile.getKampus();
                 
                 //get parameter from mohoncuti.jsp
                 String tarikhMula = request.getParameter("tarikhMula"); 
@@ -101,6 +102,7 @@ public class SemakMohonServlet extends HttpServlet {
                     preparedStatement.setString(2, tarikhMula);
                     preparedStatement.setString(3, tarikhMula);
                     preparedStatement.setString(4, tarikhTamat);
+                    preparedStatement.setString(5, kampus);
                     ResultSet rs = preparedStatement.executeQuery();
                     while(rs.next()){
                         bilanganCuti = (rs.getInt("totalCuti"));

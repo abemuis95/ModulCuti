@@ -1,8 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ page import="bean.Staff" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"  %>
+<%@ include file="pages/taglib.jsp" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -50,68 +46,7 @@
             <%@ include file="pages/header.jsp" %>
                                                     
             <!-- Left side column. contains the logo and sidebar -->
-            <aside class="main-sidebar">
-                <!-- sidebar: style can be found in sidebar.less -->
-                <section class="sidebar">
-                    <!-- Sidebar user panel -->
-                    <div class="user-panel">
-                        <div class="pull-left image">
-                            <img src="<c:out value='${sessionScope.staffSession.photo}'/>" class="img-circle" alt="User Image">
-                        </div>
-                        <div class="pull-left info">
-                            <p><c:out value="${sessionScope.staffSession.name}"/></p>
-                            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-                        </div>
-                    </div>
-                    <!-- search form -->
-                    <form action="#" method="get" class="sidebar-form">
-                        <div class="input-group">
-                            <input type="text" name="q" class="form-control" placeholder="Search...">
-                            <span class="input-group-btn">
-                                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                                </button>
-                            </span>
-                        </div>
-                    </form>
-                    <!-- /.search form -->
-                    <!-- sidebar menu: : style can be found in sidebar.less -->
-                    <ul class="sidebar-menu">
-                        <li class="header">MAIN NAVIGATION</li>
-                        <li class="active treeview">
-                            <a href="index.html">
-                                <i class="fa fa-dashboard"></i> <span>eLog Dashboard</span>
-                            </a>
-                        </li>
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-edit"></i> <span>Cuti</span>
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li class="treeview">
-                                    <a href="#"><i class="fa fa-angle-double-right"></i> Cuti Rehat
-                                    </a>
-                                    <ul class="treeview-menu">
-                                        <li><a href="MohonCuti"><i class="fa fa-circle-o"></i> Mohon Cuti Rehat</a></li>
-                                        <li><a href="semakcuti.html"><i class="fa fa-circle-o"></i> Semak Permohonan</a></li>
-                                        <li><a href="batalcuti.html"><i class="fa fa-circle-o"></i> Batal Permohonan</a></li>
-                                        <li><a href="sokonglulus.html"><i class="fa fa-circle-o"></i> Sokong/Lulus Permohonan</a></li>
-                                    </ul>
-                                </li>
-
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Cuti Sakit</a></li>
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Cuti Lahir</a></li>
-                            </ul>
-                        </li>
-                        <li class="treeview">
-                            <a href="Logout">
-                                <i class="fa fa-sign-out"></i> <span>Logout</span>
-                            </a>
-                        </li>
-                    </ul>
-                </section>
-                <!-- /.sidebar -->
-            </aside>
+            <%@ include file="pages/main-sidebar.jsp" %>
 
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
@@ -152,7 +87,7 @@
                                 <div class="inner">
                                     <h3>53<sup style="font-size: 20px">%</sup></h3>
 
-                                    <p>Bounce Rate</p>
+                                    <p>CPD Point</p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-stats-bars"></i>
@@ -165,9 +100,9 @@
                             <!-- small box -->
                             <div class="small-box bg-yellow">
                                 <div class="inner">
-                                    <h3>44</h3>
+                                    <h3>94.42<sup style="font-size: 20px">%</sup></h3>
 
-                                    <p>User Registrations</p>
+                                    <p>eLNPT - 2015</p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-person-add"></i>
@@ -180,9 +115,9 @@
                             <!-- small box -->
                             <div class="small-box bg-red">
                                 <div class="inner">
-                                    <h3>65</h3>
+                                    <h3>20</h3>
 
-                                    <p>Unique Visitors</p>
+                                    <p>Annual Leave</p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-pie-graph"></i>
@@ -203,7 +138,7 @@
                                 <ul class="nav nav-tabs pull-right">
                                     <li class="active"><a href="#revenue-chart" data-toggle="tab">Area</a></li>
                                     <li><a href="#sales-chart" data-toggle="tab">Donut</a></li>
-                                    <li class="pull-left header"><i class="fa fa-inbox"></i> Sales</li>
+                                    <li class="pull-left header"><i class="fa fa-inbox"></i> Key Performance Indicator (KPI)</li>
                                 </ul>
                                 <div class="tab-content no-padding">
                                     <!-- Morris chart - Sales -->
@@ -235,7 +170,7 @@
                                 </div>
                                 <div class="box-body">
                                     <form role="form" action="slideMasuk.html">
-                                        <label>Tarikh hari ini : </label> 24/10/2016
+                                        <label>Tarikh hari ini : </label> <span id="tarikhSekarang"></span>
                                         <br/>
                                         <label>IP Address : </label> 192.168.1.1
                                         <br/>
@@ -253,14 +188,9 @@
                 </section>
                 <!-- /.content -->
             </div>
+            
             <!-- /.content-wrapper -->
-            <footer class="main-footer">
-                <div class="pull-right hidden-xs">
-                    <b>Version</b> 2.3.6
-                </div>
-                <strong>Copyright &copy; 2014-2016 <a href="http://almsaeedstudio.com">fSociety Studio</a>.</strong> All rights
-                reserved.
-            </footer>
+            <%@ include file="pages/footer.jsp" %>
 
             <!-- Control Sidebar -->
             <aside class="control-sidebar control-sidebar-dark">
@@ -462,10 +392,10 @@
         <script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
         <!-- jQuery UI 1.11.4 -->
         <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-        <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-        <script>
-            $.widget.bridge('uibutton', $.ui.button);
-        </script>
+        <!-- moment js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment-with-locales.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/locale/ms-my.js"></script>
         <!-- Bootstrap 3.3.6 -->
         <script src="bootstrap/js/bootstrap.min.js"></script>
         <!-- Morris.js charts -->
@@ -494,6 +424,14 @@
         <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
         <script src="dist/js/pages/dashboard.js"></script>
         <!-- AdminLTE for demo purposes -->
-        <script src="dist/js/demo.js"></script>
+        <script src="dist/js/demo.js"></script>        
+        <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+        <script>
+            $.widget.bridge('uibutton', $.ui.button);
+            
+            //show current date
+            var today = moment().locale('ms-my').format('LL');
+            $('#tarikhSekarang').text(today);
+        </script>
     </body>
 </html>

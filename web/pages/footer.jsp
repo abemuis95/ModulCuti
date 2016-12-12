@@ -9,6 +9,6 @@
     <div class="pull-right hidden-xs">
         <b>Version</b> 2.3.6
     </div>
-    <strong>Copyright &copy; 2016 <a href="http://almsaeedstudio.com">Universiti Teknologi Malaysia - fSociety</a>.</strong> All rights
+    <strong>Copyright &copy; 2016 <a href="http://utm.my">Universiti Teknologi Malaysia - fSociety</a>.</strong> All rights
     reserved.
 </footer>

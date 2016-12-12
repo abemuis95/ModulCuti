@@ -17,8 +17,9 @@ public class MohonCuti {
     private String alamatCuti;
     private String catatan;
     private int bilanganCuti;
+    private int id_staff;
     private int id_sokonglulus;
-    private int status;
+    private String status;
 
     /**
      * @return the id
@@ -135,14 +136,16 @@ public class MohonCuti {
     /**
      * @return the status
      */
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
     /**
      * @param status the status to set
      */
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
+
+   
 }

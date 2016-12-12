@@ -3,15 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mohoncuti;
+package sejarahpermohonan;
 
 import bean.Staff;
+import bean.MohonCuti;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,8 +27,8 @@ import jdbc.JDBCUtility;
  *
  * @author USER
  */
-@WebServlet(name = "ViewMohonCutiServlet", urlPatterns = {"/MohonCuti"})
-public class ViewMohonCutiServlet extends HttpServlet {
+@WebServlet(name = "SejarahPermohonanServlet", urlPatterns = {"/SejarahPermohonan"})
+public class SejarahPermohonanServlet extends HttpServlet {
     
     private JDBCUtility jdbcUtility;
     private Connection con;
@@ -48,7 +50,7 @@ public class ViewMohonCutiServlet extends HttpServlet {
         jdbcUtility.jdbcConnect();
         con = jdbcUtility.jdbcGetConnection();
         jdbcUtility.prepareSQLStatement();
-    } 
+    }  
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -64,14 +66,53 @@ public class ViewMohonCutiServlet extends HttpServlet {
         
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession(false);
-        if (session != null) {
-            if (session.getAttribute("staffSession") != null) {
-                sendPage(request, response, "/pages/mohon/mohoncuti.jsp");
-            } else {
-                response.sendRedirect(request.getContextPath() + "/index.jsp");
+        MohonCuti mcuti = null;
+        ArrayList<MohonCuti> mohon = new ArrayList<MohonCuti>();
+        
+        //check if session is not null, else redirect to login page
+        if(session != null){
+            
+            // get Staff object from session
+            Staff profile = (Staff)session.getAttribute("staffSession");
+            int staff_id = profile.getId();
+            int id_sokonglulus = profile.getId_sokonglulus();
+           
+            try  {
+                
+                PreparedStatement preparedStatement = jdbcUtility.getPsSelectMohonCutiRehatViaIDSokongLulus();
+                preparedStatement.setInt(1, id_sokonglulus);
+                ResultSet rs = preparedStatement.executeQuery();
+                while(rs.next()){
+                    int id = rs.getInt("id");
+                    String tarikhMohon = rs.getString("tarikhMohon");
+                    String tarikhMula = rs.getString("tarikhMula");
+                    String tarikhTamat = rs.getString("tarikhTamat");
+                    int bilanganCuti = rs.getInt("bilanganCuti");
+                    String catatan = rs.getString("catatan");
+                    String status = rs.getString("status");
+                    
+                    mcuti = new MohonCuti();
+                    mcuti.setId(id);
+                    mcuti.setTarikhMohon(tarikhMohon);
+                    mcuti.setTarikhMula(tarikhMula);
+                    mcuti.setTarikhTamat(tarikhTamat);
+                    mcuti.setBilanganCuti(bilanganCuti);
+                    mcuti.setCatatan(catatan);
+                    mcuti.setStatus(status);
+                    
+                    mohon.add(mcuti);
+                }
+                
+                request.setAttribute("listPermohonan", mohon); //use jstl to loop the list
+                sendPage(request, response, "/pages/semak/semakcuti.jsp");
             }
-
-        } else {
+            catch (SQLException ex) { 
+                out.println("in exception");
+            }
+            
+            
+        }
+        else{
             response.sendRedirect(request.getContextPath() + "/index.jsp");
         }
             

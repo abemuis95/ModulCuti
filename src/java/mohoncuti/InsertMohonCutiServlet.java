@@ -81,7 +81,7 @@ public class InsertMohonCutiServlet extends HttpServlet {
                 String catatan = mohon.getCatatan(); 
                 String alamatCuti = mohon.getAlamatCuti();
                 //request.setAttribute("tarikhMulaTamat", request.getParameter("rangeTarikh"));
-                
+                out.println(id_sokonglulus);
                
             
                 //INSERT PERMOHONAN CUTI REHAT INTO DB
@@ -100,12 +100,9 @@ public class InsertMohonCutiServlet extends HttpServlet {
                 } catch (SQLException ex) {
                 }
                 
-                //out.println("gg3");
-                out.println("<script>");
-                out.println("    alert('Permohonan telah berjaya dihantar');");
-                out.println("</script>");
+                session.removeAttribute("mohonSession");
                    
-                response.sendRedirect("MohonCuti");
+                //response.sendRedirect("MohonCuti");
             }
             else{
                 response.sendRedirect(request.getContextPath() + "/index.jsp");

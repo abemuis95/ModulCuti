@@ -27,7 +27,7 @@
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <!--<img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">-->
-                        <span class="hidden-xs"> Welcome : <c:out value="${fn:toUpperCase(sessionScope.staffSession.name)}"/></span>
+                        <span class="hidden-xs"> Welcome : <c:out value="${fn:toUpperCase(sessionScope.staffSession.realName)}"/></span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->

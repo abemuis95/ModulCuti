@@ -13,13 +13,16 @@ package bean;
  */
 public class Staff{
     private int id;
-    private String staffno;
+    private String staffNo;
+    private String realName;
     private String name;
     private String email;
+    private String noTel;
+    private String kampus;
     private int role;
+    private int id_sokonglulus;
     private int id_jabatan;
     private int id_jawatan;
-    private int id_sokonglulus;
     private int id_cutitahunan;
     private String photo;
 
@@ -38,17 +41,31 @@ public class Staff{
     }
 
     /**
-     * @return the staffno
+     * @return the staffNo
      */
     public String getStaffNo() {
-        return staffno;
+        return staffNo;
     }
 
     /**
-     * @param no_staff the staffno to set
+     * @param staffNo the staffNo to set
      */
-    public void setStaffNo(String staffno) {
-        this.staffno = staffno;
+    public void setStaffNo(String staffNo) {
+        this.staffNo = staffNo;
+    }
+
+    /**
+     * @return the realName
+     */
+    public String getRealName() {
+        return realName;
+    }
+
+    /**
+     * @param realName the realName to set
+     */
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 
     /**
@@ -80,6 +97,62 @@ public class Staff{
     }
 
     /**
+     * @return the noTel
+     */
+    public String getNoTel() {
+        return noTel;
+    }
+
+    /**
+     * @param noTel the noTel to set
+     */
+    public void setNoTel(String noTel) {
+        this.noTel = noTel;
+    }
+
+    /**
+     * @return the kampus
+     */
+    public String getKampus() {
+        return kampus;
+    }
+
+    /**
+     * @param kampus the kampus to set
+     */
+    public void setKampus(String kampus) {
+        this.kampus = kampus;
+    }
+
+    /**
+     * @return the role
+     */
+    public int getRole() {
+        return role;
+    }
+
+    /**
+     * @param role the role to set
+     */
+    public void setRole(int role) {
+        this.role = role;
+    }
+
+    /**
+     * @return the id_sokonglulus
+     */
+    public int getId_sokonglulus() {
+        return id_sokonglulus;
+    }
+
+    /**
+     * @param id_sokonglulus the id_sokonglulus to set
+     */
+    public void setId_sokonglulus(int id_sokonglulus) {
+        this.id_sokonglulus = id_sokonglulus;
+    }
+
+    /**
      * @return the id_jabatan
      */
     public int getId_jabatan() {
@@ -108,20 +181,6 @@ public class Staff{
     }
 
     /**
-     * @return the id_sokonglulus
-     */
-    public int getId_sokonglulus() {
-        return id_sokonglulus;
-    }
-
-    /**
-     * @param id_sokonglulus the id_sokonglulus to set
-     */
-    public void setId_sokonglulus(int id_sokonglulus) {
-        this.id_sokonglulus = id_sokonglulus;
-    }
-
-    /**
      * @return the id_cutitahunan
      */
     public int getId_cutitahunan() {
@@ -147,20 +206,6 @@ public class Staff{
      */
     public void setPhoto(String photo) {
         this.photo = photo;
-    }
-
-    /**
-     * @return the role
-     */
-    public int getRole() {
-        return role;
-    }
-
-    /**
-     * @param role the role to set
-     */
-    public void setRole(int role) {
-        this.role = role;
     }
     
 }

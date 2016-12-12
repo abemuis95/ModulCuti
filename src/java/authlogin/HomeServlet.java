@@ -68,7 +68,15 @@ public class HomeServlet extends HttpServlet {
             if (session.getAttribute("staffSession") != null) {
                 // get Staff object from session
                 Staff profile = (Staff) session.getAttribute("staffSession");
-                String staffno = profile.getStaffNo();
+                
+                //Initialize penyokong and pelulus Object
+                Staff penyokong = null;
+                Staff pelulus = null;
+                
+                //String to save staff number
+                String  staffno = profile.getStaffNo(),
+                        staffNoPenyokong = "",
+                        staffNoPelulus = "";
 
                 try {
                     /* TODO output your page here. You may use following sample code. */
@@ -78,7 +86,10 @@ public class HomeServlet extends HttpServlet {
                     while (rs.next()) {
                         int id = rs.getInt("id");
                         String name = rs.getString("name"); //nama staff
+                        String realName = rs.getString("realName"); //nama sebenar staff
                         String email = rs.getString("email"); //email staff
+                        String noTel = rs.getString("noTel"); // no telefon staff
+                        String kampus = rs.getString("kampus"); // kampus staf bekerja
                         int userRole = rs.getInt("role"); // role staff - admin/user biasa
                         int id_jabatan = rs.getInt("id_jabatan");
                         int id_jawatan = rs.getInt("id_jawatan");
@@ -87,8 +98,11 @@ public class HomeServlet extends HttpServlet {
                         String photo = rs.getString("photo");
 
                         profile.setName(name);
+                        profile.setRealName(realName);
                         profile.setStaffNo(staffno);
                         profile.setEmail(email);
+                        profile.setNoTel(noTel);
+                        profile.setKampus(kampus);
                         profile.setRole(userRole);
                         profile.setId_jabatan(id_jabatan);
                         profile.setId_jawatan(id_jawatan);
@@ -97,13 +111,100 @@ public class HomeServlet extends HttpServlet {
                         profile.setPhoto(photo);
                         //response.sendRedirect(request.getContextPath() + "/welcome.jsp");
 
-                        //out.println("name " + name);
+                       // out.println("name " + name);
+                    }
+
+                } catch (SQLException ex) {
+                }
+                
+                /**
+                 * ******** GET Staff No Penyokong and Pelulus FROM DATABASE ***
+                 */
+                try {
+                    /* TODO output your page here. You may use following sample code. */
+                    PreparedStatement preparedStatement = jdbcUtility.getPsSelectSokongLulusViaID();
+                    preparedStatement.setInt(1, profile.getId_sokonglulus());
+                    ResultSet rs = preparedStatement.executeQuery();
+                    while (rs.next()) {
+                        staffNoPenyokong = rs.getString("staffNoPenyokong");
+                        staffNoPelulus = rs.getString("staffNoPelulus");
+                        //out.println(staffNoPenyokong);
                     }
 
                 } catch (SQLException ex) {
                 }
 
+                /**
+                 * ******** GET PENYOKONG INFO FROM DATABASE and put into session***
+                 */
+                try {
+                    /* TODO output your page here. You may use following sample code. */
+                    PreparedStatement preparedStatement = jdbcUtility.getPsSelectStaffViaStaffNo();
+                    preparedStatement.setString(1, staffNoPenyokong);
+                    ResultSet rs = preparedStatement.executeQuery();
+                    while (rs.next()) {
+                        int id = rs.getInt("id");
+                        String realName = rs.getString("realName"); //nama staff
+                        String email = rs.getString("email"); //email staff
+                        int userRole = rs.getInt("role"); // role staff - admin/user biasa
+                        int id_jabatan = rs.getInt("id_jabatan");
+                        int id_jawatan = rs.getInt("id_jawatan");
+                        int id_sokonglulusPenyokong = rs.getInt("id_sokonglulus");
+                        int id_cutitahunan = rs.getInt("id_cutitahunan");
+                        String photo = rs.getString("photo");
+
+                        penyokong = new Staff();
+                        penyokong.setRealName(realName);
+                        penyokong.setStaffNo(staffno);
+                        penyokong.setEmail(email);
+                        penyokong.setRole(userRole);
+                        penyokong.setId_jabatan(id_jabatan);
+                        penyokong.setId_jawatan(id_jawatan);
+                        penyokong.setId_sokonglulus(id_sokonglulusPenyokong);
+                        penyokong.setId_cutitahunan(id_cutitahunan);
+                        penyokong.setPhoto(photo);
+                    }
+                } catch (SQLException ex) {
+                }
+
+                /**
+                 * ******** GET PELULUS INFO FROM DATABASE and put into session***
+                 */
+                try {
+                    /* TODO output your page here. You may use following sample code. */
+                    PreparedStatement preparedStatement = jdbcUtility.getPsSelectStaffViaStaffNo();
+                    preparedStatement.setString(1, staffNoPelulus);
+                    ResultSet rs = preparedStatement.executeQuery();
+                    while (rs.next()) {
+                        int id = rs.getInt("id");
+                        String realName = rs.getString("realName"); //nama staff
+                        String email = rs.getString("email"); //email staff
+                        int userRole = rs.getInt("role"); // role staff - admin/user biasa
+                        int id_jabatan = rs.getInt("id_jabatan");
+                        int id_jawatan = rs.getInt("id_jawatan");
+                        int id_sokonglulusPelulus = rs.getInt("id_sokonglulus");
+                        int id_cutitahunan = rs.getInt("id_cutitahunan");
+                        String photo = rs.getString("photo");
+
+                        pelulus = new Staff();
+                        pelulus.setRealName(realName);
+                        pelulus.setStaffNo(staffno);
+                        pelulus.setEmail(email);
+                        pelulus.setRole(userRole);
+                        pelulus.setId_jabatan(id_jabatan);
+                        pelulus.setId_jawatan(id_jawatan);
+                        pelulus.setId_sokonglulus(id_sokonglulusPelulus);
+                        pelulus.setId_cutitahunan(id_cutitahunan);
+                        pelulus.setPhoto(photo);
+                        //out.println(name);
+                    }
+                } catch (SQLException ex) {
+                }
+            
+            
                 session.setAttribute("staffSession", profile);
+                session.setAttribute("penyokongSession", penyokong);
+                session.setAttribute("pelulusSession", pelulus);
 
                 sendPage(request, response, "/welcome.jsp");
             }

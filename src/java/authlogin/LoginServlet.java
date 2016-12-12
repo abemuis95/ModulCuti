@@ -77,36 +77,7 @@ public class LoginServlet extends HttpServlet {
             
             if (rs.next()) {
                 profile = new Staff();
-                profile.setStaffNo(staffno);
-//                PreparedStatement preparedStatement2 = jdbcUtility.getPsSelectStaffViaStaffNo();
-//                ResultSet rs2 = preparedStatement2.executeQuery();
-//                while(rs2.next()){
-//                    int id = rs2.getInt("id");
-//                    String name = rs2.getString("name"); //nama staff
-//                    String email = rs2.getString("email"); //email staff
-//                    int userRole = rs2.getInt("role"); // role staff - admin/user biasa
-//                    int id_jabatan = rs2.getInt("id_jabatan");
-//                    int id_jawatan = rs2.getInt("id_jawatan");
-//                    int id_sokonglulus = rs2.getInt("id_sokonglulus");
-//                    int id_cutitahunan = rs2.getInt("id_cutitahunan");
-//                    String photo = rs2.getString("photo");
-//
-//                    profile = new Staff();
-//                    profile.setStaffNo(staffno);
-//                    profile.setEmail(email);
-//                    profile.setRole(userRole);
-//                    profile.setId_jabatan(id_jabatan);
-//                    profile.setId_jawatan(id_jawatan);
-//                    profile.setId_sokonglulus(id_sokonglulus);
-//                    profile.setId_cutitahunan(id_cutitahunan);
-//                    profile.setPhoto(photo);
-//                    //response.sendRedirect(request.getContextPath() + "/welcome.jsp");
-//                    
-//                    
-//                }
-                    
-                
-                
+                profile.setStaffNo(staffno);       
             }
         }
         catch (SQLException ex) {            
